@@ -1,28 +1,45 @@
-const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
-const input = require("input"); // Para pedir datos por consola
 
-// 🔐 Consigue estos datos en: https://my.telegram.org/auth
-const apiId = 20888268; // Ej: 123456
-const apiHash = "7e84980fccdfab65b4f389d6a9f4c203"; // Ej: 'abc123def456...'
-const stringSession = new StringSession(""); // Almacena la sesión después del login
+// generarSesion.js
+import { TelegramClient } from "telegram";
+import { StringSession } from "telegram/sessions/index.js";
+import input from "input";
+import * as dotenv from "dotenv";
+import fs from "fs";
+dotenv.config();
+
+
+
+
+
+// 🔐 Usa tu API_ID y API_HASH en un archivo .env
+const apiId = parseInt(process.env.API_ID);
+const apiHash = process.env.API_HASH;
+const stringSession = new StringSession("");
 
 (async () => {
-  // Inicia el cliente de Telegram
+  console.log("Iniciando generación de sesión...");
   const client = new TelegramClient(stringSession, apiId, apiHash, {
     connectionRetries: 5,
   });
 
-  // Login
   await client.start({
     phoneNumber: async () => await input.text("Tu número (con +): "),
     password: async () => await input.text("Tu contraseña (2FA si tienes): "),
-    phoneCode: async () => await input.text("Código recibido por Telegram: "),
+    phoneCode: async () => await input.text("Código que te llega por Telegram: "),
     onError: (err) => console.log(err),
   });
 
-  console.log("✅ Sesión iniciada.");
-  console.log("💾 Tu stringSession: ", client.session.save());
+  console.log("\n✅ Sesión creada exitosamente!");
+  console.log("🔑 Guarda este stringSession en un archivo .env");
+
+  const session = client.session.save();
+  console.log("\n👉 Aquí está tu stringSession:\n\n", session, "\n");
+
+
+  // Guardar el stringSession en el archivo .env
+fs.appendFileSync('.env', `STRING_SESSION=${session}\n`);
+
+console.log("\n✅ stringSession guardado en .env");
 
   // Cambia estos nombres exactamente como aparecen en Telegram
   const nombreCanalOrigen = "[Coin119.com] Binance Futures RSI Signal 15 min";
