@@ -47,7 +47,7 @@ const stringSession = new StringSession(sessionString);
 
     // Cambia estos nombres exactamente como aparecen en Telegram
     const nombreCanalOrigen = "[Coin119.com] Binance Futures RSI Signal 15 min";
-    const nombreCanalDestino = "Binance futuros Señales Canal";
+    const nombreCanalDestino = "✅Binance futuros Señales 24/7";
 
     // Obtener los canales
     const dialogs = await client.getDialogs({});
