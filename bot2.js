@@ -67,7 +67,7 @@ async function obtenerEntidad(client, identifier) {
     }
 
     // Identificador del canal origen (nombre, username o enlace)
-    const canalOrigenIdentifier = "https://t.me/Always_Win_Premium";
+    const canalOrigenIdentifier = "https://t.me/cryptoamanclubpremium";
     // Identificador del canal destino (nombre, username o enlace)
     const canalDestinoIdentifier = "https://t.me/futurosbinancesignal";
 
